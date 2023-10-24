@@ -25,6 +25,7 @@ mongoose
 app.use(cors({ credentials: true, origin: "http://127.0.0.1:5173" }));
 app.use(express.json());
 app.use(cookieParser());
+app.use("/uploads", express.static(__dirname + "/uploads"));
 
 app.post("/register", async (req, res) => {
   const { username, password } = req.body;
@@ -77,19 +78,30 @@ app.post("/post", uploadMiddleware.single("file"), async (req, res) => {
   fs.renameSync(path, newPath);
 
   const { title, summery, content } = req.body;
-  const postDoc = await Post.create({
-    title,
-    summery,
-    content,
-    cover: newPath,
+  const { token } = req.cookies;
+  jwt.verify(token, secret, {}, async (err, info) => {
+    if (err) throw err;
+    const postDoc = await Post.create({
+      title,
+      summery,
+      content,
+      cover: newPath,
+      writer: info.id,
+    });
+    console.log(info.id);
+    res.json(postDoc);
   });
-
-  res.json(postDoc);
 });
 
 app.get("/post", async (req, res) => {
-  const posts = await Post.find();
-  res.json(posts);
+  res.json(
+    await Post.find().populate("writer", ["username"]).sort({ createdAt: -1 })
+  );
+});
+app.get("/post/:id", async (req, res) => {
+  const { id } = req.params;
+  const postDoc = await Post.findById(id).populate("writer", ["username"]);
+  res.json(postDoc);
 });
 
 app.get("/", (req, res) => res.send("express is here!"));

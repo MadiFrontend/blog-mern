@@ -22,14 +22,17 @@ const Card = () => {
                 key={data._id}
                 className="w-[400px] h-auto lg:flex lg:text-start flex flex-col justify-center items-center text-center"
               >
-                <img
-                  className="w-[320px] h-[200px]  rounded-[20px]"
-                  src={data.cover}
-                  alt=""
-                />
-                <h2 className="text-[24px] font-bold w-[300px] mt-4">
-                  {data.title}
-                </h2>
+                <Link to={`post/${data._id}`}>
+                  <img
+                    className="w-[320px] h-[200px]  rounded-[20px]"
+                    src={"http://localhost:3001/" + data.cover}
+                    alt=""
+                  />
+                  <h2 className="text-[24px] font-bold w-[300px] mt-4">
+                    {data.title}
+                  </h2>
+                </Link>
+
                 <p className="text-[#929191] text-[14px] w-[300px] mt-4">
                   {data.summery}
                 </p>
@@ -43,17 +46,16 @@ const Card = () => {
                   </div>
                   <div className="flex">
                     <GrFormView size={28} />
-                    <span className="mt-1 text-[14px] text-[#929191]">
-                      10K Viewers
-                    </span>
+                    <span className="mt-1 text-[14px] text-[#929191]"></span>
+                    <p>{data["writer"]["username"]}</p>
                   </div>
                 </div>
                 <div className="mt-5">
-                  <button className="w-[310px] h-[40px]  border-[2px] rounded-[20px] hover:bg-[#00a3ff] hover:text-[#fff]">
-                    <Link to="#" className="text-[14px]">
+                  <Link to={`post/${data._id}`} className="text-[14px]">
+                    <button className="w-[310px] h-[40px]  border-[2px] rounded-[20px] hover:bg-[#00a3ff] hover:text-[#fff]">
                       Read More
-                    </Link>
-                  </button>
+                    </button>
+                  </Link>
                 </div>
               </div>
             );

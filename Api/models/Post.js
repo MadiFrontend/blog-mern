@@ -7,7 +7,7 @@ const PostSchema = new Schema(
     summery: String,
     content: String,
     cover: String,
-    // author: {},
+    writer: { type: Schema.Types.ObjectId, ref: "User" },
   },
   {
     timestamps: true,

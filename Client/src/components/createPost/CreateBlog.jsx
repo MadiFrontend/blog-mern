@@ -48,6 +48,7 @@ function CreateBlog() {
     const response = await fetch("http://localhost:3001/post", {
       method: "POST",
       body: data,
+      credentials: "include",
     });
     if (response.ok) {
       setRedirect(true);
