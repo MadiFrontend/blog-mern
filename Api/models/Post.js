@@ -7,7 +7,7 @@ const PostSchema = new Schema(
     summery: String,
     content: String,
     cover: String,
-    author: {},
+    // author: {},
   },
   {
     timestamps: true,
