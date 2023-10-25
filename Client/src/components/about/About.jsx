@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { AboutBlog } from "../../data/AboutBlog";
+import spin from "../../../public/spin.svg";
 import { FaInstagram } from "react-icons/fa";
 import { FiFacebook, FiTwitter } from "react-icons/fi";
 import { Link, useParams } from "react-router-dom";
@@ -37,7 +37,7 @@ const About = () => {
                 {format(new Date(postInfo.createdAt), "MMM d, yyyy")}
               </time>
               <p>{postInfo["writer"]["username"]}</p>
-              {userInfo.id === postInfo.writer._id &&(
+              {userInfo.id === postInfo.writer._id && (
                 <div>
                   <Link to={`/edit/${postInfo._id}`}>Edit</Link>
                 </div>
@@ -66,7 +66,9 @@ const About = () => {
           </div>
         </div>
       ) : (
-        "loading ... "
+        <div className="flex justify-center items-center h-[500px]">
+          <img src={spin} alt="spin Logo" className="w-[80px]" />
+        </div>
       )}
     </div>
   );

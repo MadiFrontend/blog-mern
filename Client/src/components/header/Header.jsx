@@ -66,17 +66,23 @@ export default function Header() {
                   )}
                 </Disclosure.Button>
               </div>
+
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                <div className="lg:flex flex-shrink-0 hidden items-center">
-                  <button className="bg-[#3b82f6] rounded-full p-2">
-                    <TbBrandBlogger size={22} color="#fff" />
-                  </button>
-                  <h1 className="font-extrabold text-[#000] ml-2">
-                    BLOG.<span className="font-extrabold text-[#eee]">CO</span>
-                  </h1>
-                  <div className="border border-r-1 h-[60%] ml-5"></div>
+                <div className="lg:flex flex-shrink-0 hidden items-center ">
+                  <Link to={"/"} className="mt-3 flex items-center">
+                    <button className="bg-[#3b82f6] rounded-full p-2">
+                      <TbBrandBlogger size={22} color="#fff" />
+                    </button>
+
+                    <h1 className="font-extrabold text-[#000] ml-2">
+                      BLOG.
+                      <span className="font-extrabold text-[#eee]">CO</span>
+                    </h1>
+                    {/* <div className="border border-r-1 h-[100%] ml-5"></div> */}
+                  </Link>
                 </div>
-                <div className="md:hidden lg:flex ml-6 hidden">
+
+                <div className="md:hidden lg:flex ml-6 hidden mt-3 ">
                   <div className="flex space-x-2">
                     {navigation.map((item) => (
                       <Link

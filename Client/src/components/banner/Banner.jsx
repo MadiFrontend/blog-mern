@@ -69,6 +69,7 @@ const Banner = () => {
         </div>
       </div>
       <Articles />
+      
       <Card />
     </>
   );
