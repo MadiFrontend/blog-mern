@@ -11,6 +11,7 @@ import Register from "./components/register/Register";
 import Login from "./components/login/Login";
 import { UserContextProvider } from "./userContext";
 import CreateBlog from "./components/createPost/CreateBlog";
+import EditPost from "./components/editPost/EditPost";
 
 // imported articles in banner
 // imported Card in banner
@@ -24,6 +25,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Banner />} />
           <Route path="/post/:id" element={<About />} />
+          <Route path="/edit/:id" element={<EditPost />} />
           <Route path="/card" element={<Card />} />
           <Route path="/write" element={<Write />} />
           <Route path="/create" element={<CreateBlog />} />
