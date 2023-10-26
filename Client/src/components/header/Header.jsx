@@ -1,4 +1,4 @@
-import { Fragment, useContext } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
@@ -10,16 +10,17 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { UserContext } from "../../userContext";
 import user from "../../../public/user.jpg";
+import SearchBar from "../serach/SearchBar";
 
-const navigation = [
-  { name: "Home", href: "/", current: false },
-  { name: "Blog", href: "/card", current: false },
-  { name: "Services", href: "/write", current: false },
-  // { name: "Register", href: "/register", current: false },
-  // { name: "Login", href: "/login", current: false },
-  { name: "Pricing", href: "#", current: false },
-  { name: "About Us", href: "about", current: false },
-];
+// const navigation = [
+//   { name: "Home", href: "/", current: false },
+//   { name: "Blog", href: "/card", current: false },
+//   { name: "Services", href: "/write", current: false },
+//   // { name: "Register", href: "/register", current: false },
+//   // { name: "Login", href: "/login", current: false },
+//   { name: "Pricing", href: "#", current: false },
+//   { name: "About Us", href: "about", current: false },
+// ];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -94,8 +95,8 @@ export default function Header() {
                   </Link>
                 </div>
 
-                <div className="md:hidden lg:flex ml-6 hidden mt-3 ">
-                  <div className="flex space-x-2">
+                <div className="md:hidden lg:flex ml-6 hidden mb-[25px]  ">
+                  {/* <div className="flex space-x-2">
                     {navigation.map((item) => (
                       <Link
                         key={item.name}
@@ -111,7 +112,8 @@ export default function Header() {
                         {item.name}
                       </Link>
                     ))}
-                  </div>
+                  </div> */}
+                  <SearchBar />
                 </div>
               </div>
               <div className="absolute inset-y-0 gap-5 mt-2 right-10 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
@@ -133,11 +135,16 @@ export default function Header() {
                     </div>
 
                     <div
-                      className="absolute flex flex-col  w-[10%] h-[100px] bg-[#fff] shadow top-[78px] rounded-b-[20px] z-50"
+                      className="absolute flex flex-col  w-[10%] h-[100px] bg-[#fff] shadow top-[78px] rounded-b-[20px] z-50 overflow-hidden"
                       style={{
                         display: isActive ? "flex" : "none",
                       }}
                     >
+                      <div className="p-2 hover:bg-[#f8f8f8] flex items-center cursor-pointer ">
+                        {/* <AiOutlineUser /> */}
+
+                        <p className=" ml-2">Hi {username}</p>
+                      </div>
                       <div className="p-2 hover:bg-[#f8f8f8] flex items-center cursor-pointer">
                         <TbLogout2 />
                         <a onClick={logout} className=" ml-2">
@@ -170,7 +177,7 @@ export default function Header() {
             </div>
           </div>
 
-          <Disclosure.Panel className="sm:hidden header-menu">
+          {/* <Disclosure.Panel className="sm:hidden header-menu">
             <div className="space-y-1 px-2 pb-3 pt-2 ">
               {navigation.map((item) => (
                 <Disclosure.Button
@@ -187,7 +194,7 @@ export default function Header() {
                 </Disclosure.Button>
               ))}
             </div>
-          </Disclosure.Panel>
+          </Disclosure.Panel> */}
           <div className="border border-b-1 w-[95%] m-auto mt-3"></div>
         </>
       )}

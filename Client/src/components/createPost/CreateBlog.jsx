@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
+import { BiArrowBack } from "react-icons/bi";
 
 const modules = {
   toolbar: [
@@ -37,6 +38,7 @@ function CreateBlog() {
   const [content, setContent] = useState("");
   const [files, setFiles] = useState("");
   const [redirect, setRedirect] = useState(false);
+  const navigate = useNavigate();
 
   const createNewPost = async (ev) => {
     const data = new FormData();
@@ -60,36 +62,52 @@ function CreateBlog() {
   }
 
   return (
-    <div>
-      <h1>My App</h1>
-      <form className="flex flex-col" onSubmit={createNewPost}>
-        <input
-          type="text"
-          placeholder="title ..."
-          value={title}
-          onChange={(ev) => setTitle(ev.target.value)}
-          className="border my-2"
-        />
-        <input
-          type="text"
-          placeholder="summery ..."
-          value={summery}
-          onChange={(ev) => setSummery(ev.target.value)}
-          className="border my-2"
-        />
-        <input
-          type="file"
-          onChange={(ev) => setFiles(ev.target.files)}
-          className="border my-2"
-        />
-        <ReactQuill
-          value={content}
-          onChange={(newValue) => setContent(newValue)}
-          modules={modules}
-          formats={formats}
-        />
-        <button type="submit">Create Post</button>
-      </form>
+    <div className=" flex flex-col justify-center items-center ">
+      <div className="w-[80%]">
+        <div className="flex my-5">
+          <button onClick={() => navigate(-1)}>
+            <BiArrowBack  size={24} color="#a7a7a7"/>
+          </button>
+          <h1 className="text-blue-600 font-extrabold text-[30px] ml-4 ">
+            Create a New Blog
+          </h1>
+        </div>
+        <form className="flex flex-col" onSubmit={createNewPost}>
+          <input
+            type="text"
+            placeholder="title ..."
+            value={title}
+            onChange={(ev) => setTitle(ev.target.value)}
+            className="border my-2 px-2 py-1"
+          />
+          <input
+            type="text"
+            placeholder="summery ..."
+            value={summery}
+            onChange={(ev) => setSummery(ev.target.value)}
+            className="border my-2 px-2 py-1"
+          />
+          <input
+            type="file"
+            onChange={(ev) => setFiles(ev.target.files)}
+            className="border my-2 px-2 py-1"
+          />
+          <ReactQuill
+            value={content}
+            onChange={(newValue) => setContent(newValue)}
+            modules={modules}
+            formats={formats}
+          />
+
+          <button
+            className="border my-2 px-2 py-1 bg-[#eee] disabled:text-white"
+            type="submit"
+            disabled={summery && title ? false : true}
+          >
+            Create Post
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

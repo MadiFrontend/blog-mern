@@ -30,8 +30,8 @@ const Banner = () => {
             Quickly Without Any Problems
           </p>
           <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2">
-            <SearchBar />
-            <div className="flex md:mr-10 pt-10 justify-between items-center ">
+            {/* <SearchBar /> */}
+            {/* <div className="flex md:mr-10 pt-10 justify-between items-center ">
               {menus.map((menu) => {
                 return (
                   <div
@@ -42,7 +42,7 @@ const Banner = () => {
                   </div>
                 );
               })}
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
