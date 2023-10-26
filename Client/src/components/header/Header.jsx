@@ -3,12 +3,13 @@ import { Link } from "react-router-dom";
 import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { TbBrandBlogger } from "react-icons/tb";
-import { BsBell } from "react-icons/bs";
+import { TfiWrite } from "react-icons/tfi";
 import { AiOutlineUser } from "react-icons/ai";
-import { SlLogin } from "react-icons/sl";
+import { TbLogout2 } from "react-icons/tb";
 import { useEffect } from "react";
 import { useState } from "react";
 import { UserContext } from "../../userContext";
+import user from "../../../public/user.jpg";
 
 const navigation = [
   { name: "Home", href: "/", current: false },
@@ -25,6 +26,8 @@ function classNames(...classes) {
 }
 
 export default function Header() {
+  const [isActive, setisActive] = useState(false);
+
   const { setUserInfo, userInfo } = useContext(UserContext);
   useEffect(() => {
     fetch("http://localhost:3001/profile", {
@@ -52,6 +55,15 @@ export default function Header() {
     <Disclosure as="nav" className="container mx-auto container-header">
       {({ open }) => (
         <>
+          <div
+            className="w-screen h-screen fixed z-40"
+            onClick={() => {
+              setisActive(false);
+            }}
+            style={{
+              display: isActive ? "block" : "none",
+            }}
+          ></div>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
             <div className="relative flex h-16 items-center justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center lg:hidden">
@@ -103,16 +115,41 @@ export default function Header() {
                 </div>
               </div>
               <div className="absolute inset-y-0 gap-5 mt-2 right-10 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <BsBell size={24} />
                 {username && (
                   <>
-                    <Link to="/create">Create New Post</Link>
-                    <a onClick={logout}>log out</a>
+                    <Link to="/create">
+                      <div className="flex items-center cursor-pointer ">
+                        <TfiWrite className="mr-2" />
+                        Write
+                      </div>
+                    </Link>
+                    <div
+                      className="w-[30px] rounded-full border-[2px] bg-white overflow-hidden cursor-pointer z-50"
+                      onClick={() => {
+                        setisActive(!isActive);
+                      }}
+                    >
+                      <img src={user} alt="" />
+                    </div>
+
+                    <div
+                      className="absolute flex flex-col  w-[10%] h-[100px] bg-[#fff] shadow top-[78px] rounded-b-[20px] z-50"
+                      style={{
+                        display: isActive ? "flex" : "none",
+                      }}
+                    >
+                      <div className="p-2 hover:bg-[#f8f8f8] flex items-center cursor-pointer">
+                        <TbLogout2 />
+                        <a onClick={logout} className=" ml-2">
+                          log out
+                        </a>
+                      </div>
+                    </div>
                   </>
                 )}
                 {!username && (
                   <>
-                    <Link to="/register">
+                    <Link to="/login">
                       <AiOutlineUser size={24} />
                     </Link>
                   </>

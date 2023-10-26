@@ -23,7 +23,7 @@ const About = () => {
   return (
     <div>
       {postInfo ? (
-        <div className="container mx-auto" dir="rtl">
+        <div className="container mx-auto" dir="auto">
           <div
             key={postInfo._id}
             className="flex flex-col items-center justify-center mt-20"
