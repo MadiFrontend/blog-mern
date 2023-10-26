@@ -30,7 +30,7 @@ const About = () => {
           >
             <div>
               <h2 className="text-[24px] font-extrabold text-center lg:mr-12 text-[#000] mt-10">
-                {postInfo.title}
+              {postInfo.title}
               </h2>
 
               <time className="ml-2 text-[14px] text-[#929191]">
