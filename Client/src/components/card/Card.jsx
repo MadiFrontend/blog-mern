@@ -15,30 +15,36 @@ const Card = () => {
   return (
     <div className="container  mx-auto">
       {posts ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:justify-items-center gap-10 mt-16  ">
           {posts.length > 0 &&
             posts.map((data) => {
               return (
                 <div
                   key={data._id}
-                  className="w-[400px] h-auto lg:flex lg:text-start flex flex-col justify-center items-center text-center"
+                  className="w-[300px] h-[450px] lg:flex lg:text-start flex flex-col justify-between items-center text-center "
                 >
                   <Link to={`post/${data._id}`}>
                     <img
-                      className="w-[320px] h-[200px]  rounded-[20px]"
+                      className="w-[300px] h-[200px]  rounded-[20px]"
                       src={"http://localhost:3001/" + data.cover}
                       alt=""
                     />
-                    <h2 className="text-[24px] font-bold w-[300px] mt-4">
+                    <h2
+                      className="text-[24px] font-bold w-[100%] mt-4"
+                      dir="auto"
+                    >
                       {data.title}
                     </h2>
                   </Link>
 
-                  <p className="text-[#929191] text-[14px] w-[300px] mt-4">
+                  <p
+                    className="text-[#929191] text-[14px] w-[100%] h-[15%] mt-4"
+                    dir="auto"
+                  >
                     {data.summery}
                   </p>
-                  <div className="border border-t-1 w-[75%] mt-3"></div>
-                  <div className="flex ml-10 items-center mt-4 gap-4">
+                  <div className="border border-t-1 w-[80%] mt-3"></div>
+                  <div className="flex w-[80%]  items-center justify-between mt-4 ">
                     <div className="flex">
                       <LuCalendarDays size={20} />
                       <time className="ml-2 text-[14px] text-[#929191]">

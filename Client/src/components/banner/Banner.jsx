@@ -59,7 +59,10 @@ const Banner = () => {
             <div className="flex md:mr-10 pt-10 justify-between items-center ">
               {menus.map((menu) => {
                 return (
-                  <div key={menu.id} className="text-[14px] text-[#929191] hover:text-black cursor-pointer">
+                  <div
+                    key={menu.id}
+                    className="text-[14px] text-[#929191] hover:text-black cursor-pointer"
+                  >
                     {menu.title}
                   </div>
                 );
@@ -69,7 +72,7 @@ const Banner = () => {
         </div>
       </div>
       <Articles />
-      
+
       <Card />
     </>
   );
