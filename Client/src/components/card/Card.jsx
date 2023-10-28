@@ -13,7 +13,7 @@ const Card = () => {
   }, []);
 
   return (
-    <div className="container  mx-auto">
+    <div className="container flex justify-center lg:block  mx-auto">
       {posts ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:justify-items-center gap-10 mt-16  ">
           {posts.length > 0 &&
@@ -70,7 +70,6 @@ const Card = () => {
         </div>
       ) : (
         <div className="flex justify-center items-center mt-16">
-          {/* <p> Loading data, Wait a Moment Please ...</p> */}
           <img src={spin} alt="spin Logo" className="w-[80px]" />
         </div>
       )}

@@ -19,13 +19,10 @@ const About = () => {
     );
   }, []);
 
-  // if (postInfo) {
-  //   return "";
-  // }
   return (
     <div>
       {postInfo ? (
-        <div className="container w-[50%] mx-auto">
+        <div className="container w-[90%] md:w-[70%] lg:w-[50%]  mx-auto">
           <div
             key={postInfo._id}
             className="flex flex-col  justify-center mt-8"
@@ -82,7 +79,7 @@ const About = () => {
 
               <p
                 dangerouslySetInnerHTML={{ __html: postInfo.content }}
-                className="text-[16px] text-[#929191] mt-5 text-center lg:text-start  w-[380px] lg:w-[680px]"
+                className="text-[16px] text-[#929191] mt-5  lg:text-start  w-[100%] lg:w-[680px]"
                 dir="auto"
               ></p>
 

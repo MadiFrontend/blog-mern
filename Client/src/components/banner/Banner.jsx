@@ -2,23 +2,16 @@ import React from "react";
 import Articles from "../articles/Articles";
 import Card from "../card/Card";
 import SearchBar from "../serach/SearchBar";
-const menus = [
-  { id: 1, href: "#", title: "All" },
-  { id: 2, href: "#", title: "Technology" },
-  { id: 3, href: "#", title: "Sport" },
-  { id: 4, href: "#", title: "Design" },
-  { id: 5, href: "#", title: "Programing" },
-  { id: 6, href: "#", title: "Engineering" },
-];
+
 const Banner = () => {
   return (
     <>
-      <div className="container mx-auto">
-        <div className="boeder-banner">
-          <h1 className="text-[#000] md:text-[28px] font-extrabold lg:ml-[3rem] text-center mt-10 lg:text-left ">
+      <div className="container  lg:block mx-auto">
+        <div className="boeder-banner flex flex-col justify-center px-3">
+          <h1 className="text-[#000] md:text-[28px] font-extrabold lg:ml-[1rem] text-center mt-10 lg:text-left ">
             Discover Nice Articles Here
           </h1>
-          <p className="text-[#929191] text-[12px] lg:text-left text-center ml-[2.5rem] lg:ml-[3rem] mt-3 md:w-[520px] w-[350px] md:h-[70px] font-bold">
+          <p className="text-[#929191] text-[12px] lg:text-left text-center  lg:ml-[1rem] mt-3  md:h-[70px] lg:w-[50%] font-bold">
             All The Articles And Contact Of The Site Have Been{" "}
             <span className="text-[#000] font-bold text-[16px]">
               Updated Today

@@ -28,7 +28,7 @@ function SearchBar() {
   return (
     <div>
       <form className="pt-10">
-        <div className="relative lg:ml-[3rem] ml-[3.5rem] md:text-left">
+        <div className="relative  lg:ml-[3rem] md:ml-[3.5rem] md:text-left">
           <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
             <svg
               className="w-4 h-4  dark:text-gray-400"
@@ -49,7 +49,7 @@ function SearchBar() {
             type="text"
             placeholder="Search..."
             id="default-search"
-            className="block md:w-[80%] w-[320px] md:h-[40px] bg-[#f3f3f5] p-[6px] pl-10 text-sm text-gray-900 border rounded-[20px]  focus:ring-blue-500 focus:border-blue-500  dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="block md:w-[80%] w-[200px] md:h-[40px] bg-[#f3f3f5] p-[6px] pl-10 text-sm text-gray-900 border rounded-[20px]  focus:ring-blue-500 focus:border-blue-500   "
             required
             onChange={searchHandler}
             onClick={() => {
@@ -60,29 +60,28 @@ function SearchBar() {
       </form>
 
       {searchMyData && searchMyData.length > 0 && (
-        <div className="bg-white w-[21%] h-[300px] shadow-2xl border rounded-2xl absolute z-[55] left-[190px] top-[20]  overflow-y-scroll scrollbar-hide ">
+        <div className="bg-white w-[100%] md:w-[50%] lg:w-[30%] lg:h-[300px] shadow-2xl border rounded-2xl absolute z-[55] lg:left-[190px] md:left-[170px]   overflow-y-scroll scrollbar-hide ">
           {searchMyData.map((search) => {
             return (
               <div
-                className="flex items-center my-10 hover:shadow-sm pb-1 cursor-pointer pr-2"
+                className="flex items-center py-5 cursor-pointer pr-2 hover:bg-[#f8f8f8]"
                 key={search._id}
               >
-                <div className="w-[20px] h-[10px] ">
-                  {/* <Link to={`post/${search._id}`}>
+                <div className="w-[80px] h-[70px] ml-3 ">
+                  <Link to={`post/${search._id}`}>
                     <img
                       src={"http://localhost:3001/" + search.cover}
                       alt=""
-                      className="w-full h-full rounded-[20px]"
+                      className="w-full h-full rounded-[15px]"
                     />
-                  </Link> */}
+                  </Link>
                 </div>
-                <div className=" w-[80%]">
+                <div className=" w-[60%] ml-3">
                   <p className=" font-bold truncate">{search.title}</p>
                   <p className="text-[#949494] mt-1 truncate">
                     {search.summery}
                   </p>
                 </div>
-                
               </div>
             );
           })}
