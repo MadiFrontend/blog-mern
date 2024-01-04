@@ -10,13 +10,32 @@ import { UserContext } from "../../userContext";
 
 const About = () => {
   const [postInfo, setPostInfo] = useState(null);
+  const [newComment, setNewComment] = useState(null);
   const { id } = useParams();
   const { userInfo } = useContext(UserContext);
 
+  const addComment = async (ev) => {
+    ev.preventDefault();
+    const response = await fetch(`http://localhost:3001/comment/${id}`, {
+      method: "POST",
+      body: JSON.stringify(newComment),
+      headers: { "content-Type": "application/json" },
+    });
+    if (response.status === 200) {
+      alert("your comment sent!");
+    } else {
+      alert("we cannot add your comment!");
+    }
+    console.log(id);
+  };
+  console.log(newComment);
   useEffect(() => {
     fetch(`http://localhost:3001/post/${id}`).then((res) =>
       res.json().then((posts) => setPostInfo(posts))
     );
+    // fetch(`http://localhost:3001/comment/${id}`).then((res) =>
+    //   res.json().then((posts) => setPostInfo(posts))
+    // );
   }, []);
 
   return (
@@ -98,6 +117,17 @@ const About = () => {
           <img src={spin} alt="spin Logo" className="w-[80px]" />
         </div>
       )}
+      <div>
+        <form onSubmit={addComment}>
+          <input
+            type="text"
+            onChange={(ev) => setNewComment(ev.target.value)}
+            placeholder="newComment"
+            name="newComment"
+          />
+          <button type="submit">add comment</button>
+        </form>
+      </div>
     </div>
   );
 };

@@ -12,6 +12,8 @@ const Card = () => {
     );
   }, []);
 
+  console.log(posts);
+
   return (
     <div className="container flex justify-center lg:block  mx-auto">
       {posts ? (
