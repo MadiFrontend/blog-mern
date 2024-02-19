@@ -5,7 +5,7 @@ import Header from "./components/header/Header";
 import Banner from "./components/banner/Banner";
 import Footer from "./components/footer/Footer";
 import About from "./components/about/About";
-import Card from "./components/card/Card";
+import Card from "./components/card/CardList";
 import Write from "./components/write/Write";
 import Register from "./components/register/Register";
 import Login from "./components/login/Login";

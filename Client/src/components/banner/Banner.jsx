@@ -1,7 +1,5 @@
-import React from "react";
 import Articles from "../articles/Articles";
-import Card from "../card/Card";
-import SearchBar from "../serach/SearchBar";
+import CardList from "../card/CardList";
 
 const Banner = () => {
   return (
@@ -22,26 +20,10 @@ const Banner = () => {
             </span>
             Quickly Without Any Problems
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2">
-            {/* <SearchBar /> */}
-            {/* <div className="flex md:mr-10 pt-10 justify-between items-center ">
-              {menus.map((menu) => {
-                return (
-                  <div
-                    key={menu.id}
-                    className="text-[14px] text-[#929191] hover:text-black cursor-pointer"
-                  >
-                    {menu.title}
-                  </div>
-                );
-              })}
-            </div> */}
-          </div>
         </div>
       </div>
       <Articles />
-
-      <Card />
+      <CardList />
     </>
   );
 };
