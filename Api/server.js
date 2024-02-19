@@ -132,8 +132,5 @@ app.get("/post/:id", async (req, res) => {
   res.json(postDoc);
 });
 
-
-
-
 app.get("/", (req, res) => res.send("express is here!"));
 app.listen(port, () => console.log(` app listening on port ${port}!`));
