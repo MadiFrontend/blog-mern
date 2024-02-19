@@ -28,6 +28,7 @@ const Articles = () => {
                 <p className='text-center md:w-[600px] lg:w-[900px] m-auto font-bold pt-5 text-[14px] text-[#94a3b8] '><span className='text-[#000] font-bold text-[16px]'>Lorem ipsum, dolor</span> sit amet consectetur adipisicing elit. Quas vitae, <span className='text-[#000] font-bold text-[16px]'>fugit repellendus </span>distinctio ex non obcaecati itaque vel dignissimos suscipit enim ducimus praesentium libero dolor nobis! Unde ad voluptatem cupiditate.</p>
 
             </div> */}
+    
     </div>
   );
 };

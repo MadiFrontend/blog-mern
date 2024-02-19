@@ -30,7 +30,7 @@ export default function Header() {
       method: "POST",
       credentials: "include",
     });
-    setUserInfo(null);
+    setUserInfo({});
     window.location.reload();
   };
 
