@@ -12,6 +12,7 @@ import Login from "./components/login/Login";
 import { UserContextProvider } from "./userContext";
 import CreateBlog from "./components/createPost/CreateBlog";
 import EditPost from "./components/editPost/EditPost";
+import ScrollToTop from "./utils/scrollToTheTop";
 
 // imported articles in banner
 // imported Card in banner
@@ -33,6 +34,7 @@ const App = () => {
           <Route path="/login" element={<Login />} />
         </Routes>
         <Footer />
+        <ScrollToTop />
       </UserContextProvider>
     </>
   );
