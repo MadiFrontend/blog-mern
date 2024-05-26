@@ -34,7 +34,7 @@ const formats = [
 
 function CreateBlog() {
   const [title, setTitle] = useState("");
-  const [summery, setSummery] = useState("");
+  const [summary, setSummary] = useState("");
   const [content, setContent] = useState("");
   const [files, setFiles] = useState("");
   const [redirect, setRedirect] = useState(false);
@@ -43,7 +43,7 @@ function CreateBlog() {
   const createNewPost = async (ev) => {
     const data = new FormData();
     data.set("title", title);
-    data.set("summery", summery);
+    data.set("summary", summary);
     data.set("content", content);
     data.set("file", files[0]);
     ev.preventDefault();
@@ -82,9 +82,9 @@ function CreateBlog() {
           />
           <input
             type="text"
-            placeholder="summery ..."
-            value={summery}
-            onChange={(ev) => setSummery(ev.target.value)}
+            placeholder="summary ..."
+            value={summary}
+            onChange={(ev) => setSummary(ev.target.value)}
             className="border my-2 px-2 py-1"
           />
           <input
@@ -102,7 +102,7 @@ function CreateBlog() {
           <button
             className="border my-2 px-2 py-1 bg-[#eee] disabled:text-white"
             type="submit"
-            disabled={summery && title ? false : true}
+            disabled={summary && title ? false : true}
           >
             Create Post
           </button>

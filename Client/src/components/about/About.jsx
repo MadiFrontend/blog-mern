@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import spin from "../../../public/spin.svg";
 import { FaInstagram } from "react-icons/fa";
 import { FiFacebook, FiTwitter } from "react-icons/fi";
-import { AiFillLike } from "react-icons/ai";
+import { AiFillLike, AiOutlineLike } from "react-icons/ai";
 import { FaRegComment } from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
 import { format } from "date-fns";
@@ -13,12 +13,40 @@ const About = () => {
   const [postInfo, setPostInfo] = useState(null);
   const { id } = useParams();
   const { userInfo } = useContext(UserContext);
+  const [liked, setLiked] = useState(false);
+  const [likes, setLikes] = useState(0);
+
+  useEffect(() => {
+    fetch(`http://localhost:3001/post/${id}`)
+      .then((response) => response.json())
+      .then((data) => {
+        const currentUserHasLiked = data.likes.some(
+          (like) => like.toString() === userInfo.id
+        );
+        setLiked(currentUserHasLiked);
+        setLikes(data.likes.length);
+console.log(data)
+      });
+  }, [id]);
 
   useEffect(() => {
     fetch(`http://localhost:3001/post/${id}`).then((res) =>
       res.json().then((posts) => setPostInfo(posts))
     );
   }, []);
+
+  async function toggleLikeStatus() {
+    if (userInfo.id) {
+      const response = await fetch(`http://localhost:3001/post/${id}/like`, {
+        method: "PATCH",
+        credentials: "include",
+      });
+
+      const data = await response.json();
+      setLiked(!liked ? true : false);
+      setLikes(data.likes.length);
+    } else alert("Login first!");
+  }
 
   return (
     <div>
@@ -36,7 +64,7 @@ const About = () => {
                 {postInfo.title}
               </h2>
               <p className="text-[20px] text-[#929191] mt-3  " dir="auto">
-                {postInfo.summery}
+                {postInfo.summary}
               </p>
               <div className="flex items-center mt-5">
                 <div className="w-[55px] h-[55px] bg-black rounded-full ">
@@ -60,19 +88,23 @@ const About = () => {
               </div>
             </div>
             <div className="w-[100%] h-[50px] border-y-[2px] mt-8 flex">
-              <div className="flex items-center mr-8 ">
-                <AiFillLike className="cursor-pointer" />
-                <p className="ml-2">I Liked it</p>
+              <div
+                className="flex items-center mr-8 cursor-pointer"
+                onClick={toggleLikeStatus}
+              >
+                {liked ? <AiFillLike /> : <AiOutlineLike />}
+
+                <p className="ml-2"> {likes}</p>
               </div>
               <div className="flex items-center mr-8">
                 <FaRegComment className="cursor-pointer" />
-                <p className="ml-2">Comment</p>
+                <p className="ml-2">{postInfo.comments.length}</p>
               </div>
             </div>
             <div className="flex flex-col items-center justify-center">
               <div>
                 <img
-                  className="w-[350px] h-[200px] md:w-[700px] md:h-[450px] rounded-[20px] mt-14"
+                  className="w-[350px] h-[200px] object-cover md:w-[700px] md:h-[450px] rounded-[20px] mt-14"
                   src={"http://localhost:3001/" + postInfo.cover}
                   alt=""
                 />

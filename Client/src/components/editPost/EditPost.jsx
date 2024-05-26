@@ -34,7 +34,7 @@ const formats = [
 
 function EditPost() {
   const [title, setTitle] = useState("");
-  const [summery, setSummery] = useState("");
+  const [summary, setSummary] = useState("");
   const [content, setContent] = useState("");
   const [files, setFiles] = useState("");
   const [redirect, setRedirect] = useState(false);
@@ -45,7 +45,7 @@ function EditPost() {
     fetch(`http://localhost:3001/post/${id}`).then((res) =>
       res.json().then((posts) => {
         setTitle(posts.title);
-        setSummery(posts.summery);
+        setSummary(posts.summary);
         setContent(posts.content);
       })
     );
@@ -55,7 +55,7 @@ function EditPost() {
     ev.preventDefault();
     const data = new FormData();
     data.set("title", title);
-    data.set("summery", summery);
+    data.set("summary", summary);
     data.set("content", content);
     data.set("id", id);
     if (files?.[0]) {
@@ -99,9 +99,9 @@ function EditPost() {
           />
           <input
             type="text"
-            placeholder="summery ..."
-            value={summery}
-            onChange={(ev) => setSummery(ev.target.value)}
+            placeholder="summary ..."
+            value={summary}
+            onChange={(ev) => setSummary(ev.target.value)}
             className="border my-2 px-2 py-1"
           />
           <input

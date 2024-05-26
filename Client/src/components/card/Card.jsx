@@ -11,9 +11,9 @@ const Card = ({ data }) => {
     >
       <Link to={`post/${data._id}`}>
         <img
-          className="w-[300px] h-[200px]  rounded-[20px]"
+          className="w-[300px] h-[200px] object-cover  rounded-[20px]"
           src={"http://localhost:3001/" + data.cover}
-          alt=""
+          alt="post-image"
         />
       </Link>
       <div className="w-[100%] h-[50%]">
@@ -27,7 +27,7 @@ const Card = ({ data }) => {
           className="text-[#929191] text-[14px] w-[100%] mt-4 truncate "
           dir="auto"
         >
-          {data.summery}
+          {data.summary}
         </p>
       </div>
       <div className="border border-t-1 w-[80%] mt-3"></div>
