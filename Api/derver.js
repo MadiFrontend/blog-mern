@@ -151,13 +151,33 @@ app.get("/post/:id", async (req, res) => {
 });
 
 // Create a new comment
+
 app.post("/post/:id/comment", async (req, res) => {
   const { id } = req.params;
   const { content, author } = req.body;
+
   try {
-    const comment = await Comment.create({ content, author, post: id });
-    console.log(comment);
-    res.json(comment);
+    // Find the post by ID
+    const post = await Post.findOne({ _id: id });
+
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    // Create a new comment
+    const newComment = new Comment({ content, author, post: id });
+
+    // Save the new comment
+    const savedComment = await newComment.save();
+
+    // Append the new comment to the post's comments array
+    post.comments.push(savedComment._id);
+
+    // Save the updated post
+    await post.save();
+
+    // Return the updated post with the new comment
+    res.json(savedComment);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -197,6 +217,20 @@ app.get("/post/:id/comments", async (req, res) => {
 app.delete("/post/:id/comment/:commentId", async (req, res) => {
   const { id, commentId } = req.params;
   try {
+    const post = await Post.findOne({ _id: id });
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+    const commentIndex = post.comments.findIndex(
+      (comment) => comment.toString() === commentId
+    );
+    if (commentIndex === -1) {
+      return res.status(404).json({ message: "Comment not found in the post" });
+    }
+    // Remove the comment from the post's comments array
+    post.comments.splice(commentIndex, 1);
+    await post.save();
+
     const comment = await Comment.findOneAndDelete({
       _id: commentId,
       post: id,
@@ -233,13 +267,9 @@ app.patch("/post/:id/like", async (req, res) => {
       post.likes.push(userId.toString());
     }
 
-    const currentUserHasLiked = index > -1 ? false : true;
-    console.log(currentUserHasLiked);
-
     await post.save();
     res.json({
       likes: post.likes,
-      likedByCurrentUser: currentUserHasLiked,
     });
   } catch (error) {
     if (
