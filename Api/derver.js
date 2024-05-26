@@ -35,9 +35,10 @@ app.use("/uploads", express.static(__dirname + "/uploads"));
 app.post("/register", async (req, res) => {
   const { username, password } = req.body;
   try {
+    const hashedPassword = await bcrypt.hash(password, salt);
     const userDoc = await User.create({
       username,
-      password,
+      password: hashedPassword,
     });
     res.json(userDoc);
   } catch (e) {
@@ -50,8 +51,12 @@ app.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
   const userDoc = await User.findOne({ username });
+  if (!userDoc) {
+    return res.status(404).json({ error: "User not found" });
+  }
+  const passOk = bcrypt.compareSync(password, userDoc.password);
 
-  if (password === userDoc.password) {
+  if (passOk) {
     jwt.sign({ username, id: userDoc._id }, secret, {}, (err, token) => {
       if (err) throw err;
       res.cookie("token", token).json({
@@ -60,7 +65,7 @@ app.post("/login", async (req, res) => {
       });
     });
   } else {
-    res.status(400).json("wrong conditional");
+    res.status(400).json("invalid conditional");
   }
 });
 
@@ -86,13 +91,13 @@ app.post("/post", uploadMiddleware.single("file"), async (req, res) => {
   const newPath = path + "." + ext;
   fs.renameSync(path, newPath);
 
-  const { title, summery, content } = req.body;
+  const { title, summary, content } = req.body;
   const { token } = req.cookies;
   jwt.verify(token, secret, {}, async (err, info) => {
     if (err) throw err;
     const postDoc = await Post.create({
       title,
-      summery,
+      summary,
       content,
       cover: newPath,
       writer: info.id,
@@ -115,7 +120,7 @@ app.put("/post", uploadMiddleware.single("file"), async (req, res) => {
   const { token } = req.cookies;
   jwt.verify(token, secret, {}, async (err, info) => {
     if (err) throw err;
-    const { id, title, summery, content } = req.body;
+    const { id, title, summary, content } = req.body;
     const postDoc = await Post.findById(id);
     const isWriter = JSON.stringify(postDoc.writer) === JSON.stringify(info.id);
     if (!isWriter) {
@@ -123,7 +128,7 @@ app.put("/post", uploadMiddleware.single("file"), async (req, res) => {
     }
     await postDoc.updateOne({
       title,
-      summery,
+      summary,
       content,
       cover: newPath ? newPath : postDoc.cover,
     });
@@ -202,6 +207,48 @@ app.delete("/post/:id/comment/:commentId", async (req, res) => {
     res.json({ message: "Comment deleted" });
   } catch (err) {
     res.status(500).json({ message: err.message });
+  }
+});
+
+app.patch("/post/:id/like", async (req, res) => {
+  const { token } = req.cookies;
+
+  try {
+    // Correctly capture the decoded object
+    const decoded = await jwt.verify(token, secret);
+    const userId = decoded.id;
+
+    const postId = req.params.id;
+
+    const post = await Post.findById(postId);
+    if (!post) return res.status(404).json({ message: "Post not found" });
+
+    const index = post.likes.indexOf(userId.toString());
+    console.log(index); // Ensure userId is converted to string if necessary
+    if (index > -1) {
+      // Unlike
+      post.likes.splice(index, 1);
+    } else if (index === -1) {
+      // Like
+      post.likes.push(userId.toString());
+    }
+
+    const currentUserHasLiked = index > -1 ? false : true;
+    console.log(currentUserHasLiked);
+
+    await post.save();
+    res.json({
+      likes: post.likes,
+      likedByCurrentUser: currentUserHasLiked,
+    });
+  } catch (error) {
+    if (
+      error instanceof jwt.TokenExpiredError ||
+      error instanceof jwt.JsonWebTokenError
+    ) {
+      return res.status(401).json({ message: "Invalid token" });
+    }
+    return res.status(500).json({ message: "Error updating likes" });
   }
 });
 

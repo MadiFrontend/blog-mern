@@ -29,23 +29,27 @@ app.use("/uploads", express.static(__dirname + "/uploads"));
 app.post("/register", async (req, res) => {
   const { username, password } = req.body;
   try {
+    const hashedPassword = await bcrypt.hash(password, salt);
     const userDoc = await User.create({
       username,
-      password,
+      password: hashedPassword,
     });
     res.json(userDoc);
   } catch (e) {
     console.log(e);
   }
 });
+
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
   const userDoc = await User.findOne({ username });
-  // const passOk = bcrypt.compareSync(password, userDoc.password);
+  if (!userDoc) {
+    return res.status(404).json({ error: "User not found" });
+  }
+  const passOk = bcrypt.compareSync(password, userDoc.password);
 
-  console.log();
-  if (password === userDoc.password) {
+  if (passOk && userDoc) {
     jwt.sign({ username, id: userDoc._id }, secret, {}, (err, token) => {
       if (err) throw err;
       res.cookie("token", token).json({
@@ -54,7 +58,7 @@ app.post("/login", async (req, res) => {
       });
     });
   } else {
-    res.status(400).json("wrong conditional");
+    res.status(401).json("invalid conditional!");
   }
 });
 
@@ -69,6 +73,8 @@ app.get("/profile", (req, res) => {
 app.post("/logout", (req, res) => {
   res.cookie("token", "").json("ok");
 });
+
+
 app.post("/post", uploadMiddleware.single("file"), async (req, res) => {
   const { originalname, path } = req.file;
   const parts = originalname.split(".");
@@ -76,13 +82,13 @@ app.post("/post", uploadMiddleware.single("file"), async (req, res) => {
   const newPath = path + "." + ext;
   fs.renameSync(path, newPath);
 
-  const { title, summery, content } = req.body;
+  const { title, summary, content } = req.body;
   const { token } = req.cookies;
   jwt.verify(token, secret, {}, async (err, info) => {
     if (err) throw err;
     const postDoc = await Post.create({
       title,
-      summery,
+      summary,
       content,
       cover: newPath,
       writer: info.id,
@@ -105,7 +111,7 @@ app.put("/post", uploadMiddleware.single("file"), async (req, res) => {
   const { token } = req.cookies;
   jwt.verify(token, secret, {}, async (err, info) => {
     if (err) throw err;
-    const { id, title, summery, content } = req.body;
+    const { id, title, summary, content } = req.body;
     const postDoc = await Post.findById(id);
     const isWriter = JSON.stringify(postDoc.writer) === JSON.stringify(info.id);
     if (!isWriter) {
@@ -113,7 +119,7 @@ app.put("/post", uploadMiddleware.single("file"), async (req, res) => {
     }
     await postDoc.updateOne({
       title,
-      summery,
+      summary,
       content,
       cover: newPath ? newPath : postDoc.cover,
     });

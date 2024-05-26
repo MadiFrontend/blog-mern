@@ -7,6 +7,7 @@ const PostSchema = new Schema(
     summary: String,
     content: String,
     cover: String,
+    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     writer: { type: Schema.Types.ObjectId, ref: "User" },
     comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
   },
