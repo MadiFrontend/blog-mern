@@ -296,3 +296,8 @@ app.get("/", (req, res) => res.send("express is here!"));
 
 // Start the server
 app.listen(port, () => console.log(` app listening on port ${port}!`));
+
+app.use(function(err, req, res, next) {
+  console.error(err.stack); // log error stack trace
+  res.status(500).send('Something broke!');
+});
