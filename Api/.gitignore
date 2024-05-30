@@ -26,3 +26,5 @@ git rm /server.js
 *.sw?
 
 .vercel
+
+.vercel
