@@ -41,7 +41,22 @@ mongoose
 //     origin: "https://blog-mern-frontend-gamma.vercel.app/",
 //   })
 // );
-app.use(cors());
+// app.use(cors());
+
+var allowCrossDomain = function (req, res, next) {
+  // Replace 'http://example.com' with the actual origin you want to allow
+  res.header(
+    "Access-Control-Allow-Origin",
+    "https://blog-mern-frontend-gamma.vercel.app"
+  );
+  res.header("Access-Control-Allow-Credentials", true);
+  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+};
 
 app.use(express.json());
 app.use(cookieParser());
