@@ -26,25 +26,15 @@ mongoose
   .then(() => console.log("Connected To Db!"))
   .catch((err) => console.log("Disconnect From DB!"));
 
-// Middleware for CORS, JSON parsing, cookie parsing, and static file serving
-// const corsOptions = {
-//   origin: [
-//     "https://blog-mern-frontend-gamma.vercel.app/",
-//     "http://localhost:5173",
-//   ],
-//   optionsSuccessStatus: 200, // For legacy browser support
-// };
 
-// app.use(
-//   cors({
-//     credentials: true,
-//     origin: "https://blog-mern-frontend-gamma.vercel.app/",
-//   })
-// );
-// app.use(cors());
+const corsOptions = {
+  origin: "https://blog-mern-frontend-gamma.vercel.app", // Specify the exact origin
+  credentials: true, // Allow sending of cookies and HTTP authentication
+};
+
+app.use(cors(corsOptions));
 
 var allowCrossDomain = function (req, res, next) {
-  // Replace 'http://example.com' with the actual origin you want to allow
   res.header(
     "Access-Control-Allow-Origin",
     "https://blog-mern-frontend-gamma.vercel.app"

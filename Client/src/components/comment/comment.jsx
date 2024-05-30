@@ -14,7 +14,7 @@ const Comments = ({ postInfo, userInfo }) => {
   const deleteComment = async (commentId) => {
     if (confirm("Are You Sure?")) {
       try {
-        await fetch(`${API_ENDPOINT}/${postId}/comment/${commentId}`, {
+        await fetch(`${API_ENDPOINT}/post/${postId}/comment/${commentId}`, {
           method: "DELETE",
         });
         setComments(comments.filter((comment) => comment._id !== commentId));
@@ -26,7 +26,7 @@ const Comments = ({ postInfo, userInfo }) => {
 
   // Fetch comments when component mounts
   useEffect(() => {
-    fetch(`${API_ENDPOINT}/${postId}/comments`)
+    fetch(`${API_ENDPOINT}/post/${postId}/comments`)
       .then((response) => response.json())
       .then((data) => setComments(data));
   }, [postId]);
@@ -34,7 +34,7 @@ const Comments = ({ postInfo, userInfo }) => {
   // Function to submit a new comment
   const submitComment = async () => {
     const response = await fetch(
-      `${API_ENDPOINT}/${postId}/comment`,
+      `${API_ENDPOINT}/post/${postId}/comment`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
