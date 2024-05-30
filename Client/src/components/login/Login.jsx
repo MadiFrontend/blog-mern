@@ -13,15 +13,12 @@ function Login() {
 
   const login = async (ev) => {
     ev.preventDefault();
-    const response = await fetch(
-      `${API_ENDPOINT}/login`,
-      {
-        method: "POST",
-        body: JSON.stringify({ username, password }),
-        headers: { "content-Type": "application/json" },
-        credentials: "include",
-      }
-    );
+    const response = await fetch(`${API_ENDPOINT}/login`, {
+      method: "POST",
+      body: JSON.stringify({ username, password }),
+      headers: { "content-Type": "application/json" },
+      credentials: "include",
+    });
     if (response.ok) {
       response.json().then((userInfo) => {
         setUserInfo(userInfo);
