@@ -35,12 +35,13 @@ mongoose
 //   optionsSuccessStatus: 200, // For legacy browser support
 // };
 
-app.use(
-  cors({
-    credentials: true,
-    origin: "https://blog-mern-frontend-gamma.vercel.app/",
-  })
-);
+// app.use(
+//   cors({
+//     credentials: true,
+//     origin: "https://blog-mern-frontend-gamma.vercel.app/",
+//   })
+// );
+app.use(cors());
 
 app.use(express.json());
 app.use(cookieParser());
