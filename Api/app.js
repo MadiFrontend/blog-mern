@@ -2,7 +2,7 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 const User = require("./models/User");
 const Post = require("./models/Post");
 const Comment = require("./models/Comment");
