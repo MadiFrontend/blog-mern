@@ -258,7 +258,6 @@ app.patch("/post/:id/like", async (req, res) => {
     if (!post) return res.status(404).json({ message: "Post not found" });
 
     const index = post.likes.indexOf(userId.toString());
-    console.log(index); // Ensure userId is converted to string if necessary
     if (index > -1) {
       // Unlike
       post.likes.splice(index, 1);
