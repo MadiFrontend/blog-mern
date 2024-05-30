@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import spin from "../../../public/spin.svg";
 import Card from "./Card";
+const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT;
 
 const CardList = () => {
   const [posts, setPosts] = useState(null);
-
+  console.log(API_ENDPOINT);
   useEffect(() => {
-    fetch("http://localhost:3001/post").then((res) =>
+    fetch(`${API_ENDPOINT}/post`).then((res) =>
       res.json().then((posts) => setPosts(posts))
     );
   }, []);

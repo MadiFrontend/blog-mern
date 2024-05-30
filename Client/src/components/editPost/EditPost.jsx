@@ -3,6 +3,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { BiArrowBack } from "react-icons/bi";
+const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT;
 
 const modules = {
   toolbar: [
@@ -42,7 +43,7 @@ function EditPost() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`http://localhost:3001/post/${id}`).then((res) =>
+    fetch(`${API_ENDPOINT}/post/${id}`).then((res) =>
       res.json().then((posts) => {
         setTitle(posts.title);
         setSummary(posts.summary);
@@ -62,7 +63,7 @@ function EditPost() {
       data.set("file", files?.[0]);
     }
 
-    const res = await fetch("http://localhost:3001/post", {
+    const res = await fetch(`${API_ENDPOINT}`, {
       method: "PUT",
       body: data,
       credentials: "include",

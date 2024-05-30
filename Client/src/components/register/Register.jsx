@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT;
 
 function Register() {
   const [username, setUsername] = useState("");
@@ -8,7 +9,7 @@ function Register() {
 
   const register = async (ev) => {
     ev.preventDefault();
-    const response = await fetch("http://localhost:3001/register", {
+    const response = await fetch(`${API_ENDPOINT}/register`, {
       method: "POST",
       body: JSON.stringify({ username, password }),
       headers: { "content-Type": "application/json" },

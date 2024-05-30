@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FaTrash } from "react-icons/fa";
+const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT;
 
 // Comment component
 
@@ -13,12 +14,9 @@ const Comments = ({ postInfo, userInfo }) => {
   const deleteComment = async (commentId) => {
     if (confirm("Are You Sure?")) {
       try {
-        await fetch(
-          `http://localhost:3001/post/${postId}/comment/${commentId}`,
-          {
-            method: "DELETE",
-          }
-        );
+        await fetch(`${API_ENDPOINT}/${postId}/comment/${commentId}`, {
+          method: "DELETE",
+        });
         setComments(comments.filter((comment) => comment._id !== commentId));
       } catch (err) {
         console.error(err);
@@ -28,7 +26,7 @@ const Comments = ({ postInfo, userInfo }) => {
 
   // Fetch comments when component mounts
   useEffect(() => {
-    fetch(`http://localhost:3001/post/${postId}/comments`)
+    fetch(`${API_ENDPOINT}/${postId}/comments`)
       .then((response) => response.json())
       .then((data) => setComments(data));
   }, [postId]);
@@ -36,7 +34,7 @@ const Comments = ({ postInfo, userInfo }) => {
   // Function to submit a new comment
   const submitComment = async () => {
     const response = await fetch(
-      `http://localhost:3001/post/${postId}/comment`,
+      `${API_ENDPOINT}/${postId}/comment`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },

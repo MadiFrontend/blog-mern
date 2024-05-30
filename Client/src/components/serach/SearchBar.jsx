@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT;
 
 function SearchBar() {
   const [search, setSearch] = useState(" ");
@@ -8,7 +9,7 @@ function SearchBar() {
   const [shown, setShown] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:3001/post").then((res) =>
+    fetch(`${API_ENDPOINT}/post`).then((res) =>
       res.json().then((posts) => setPosts(posts))
     );
   }, []);
@@ -70,7 +71,7 @@ function SearchBar() {
                 <div className="w-[80px] h-[70px] ml-3 ">
                   <Link to={`post/${search._id}`}>
                     <img
-                      src={"http://localhost:3001/" + search.cover}
+                      src={`${API_ENDPOINT}/` + search.cover}
                       alt=""
                       className="w-full h-full rounded-[15px]"
                     />

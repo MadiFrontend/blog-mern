@@ -8,6 +8,7 @@ import { Link, useParams } from "react-router-dom";
 import { format } from "date-fns";
 import { UserContext } from "../../userContext";
 import Comments from "../comment/comment";
+const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT;
 
 const About = () => {
   const [postInfo, setPostInfo] = useState(null);
@@ -17,7 +18,7 @@ const About = () => {
   const [likes, setLikes] = useState(0);
 
   useEffect(() => {
-    fetch(`http://localhost:3001/post/${id}`)
+    fetch(`${API_ENDPOINT}/post/${id}`)
       .then((response) => response.json())
       .then((data) => {
         const currentUserHasLiked = data.likes.some(
@@ -25,19 +26,19 @@ const About = () => {
         );
         setLiked(currentUserHasLiked);
         setLikes(data.likes.length);
-console.log(data)
+        console.log(data);
       });
   }, [id]);
 
   useEffect(() => {
-    fetch(`http://localhost:3001/post/${id}`).then((res) =>
+    fetch(`${API_ENDPOINT}/post/${id}`).then((res) =>
       res.json().then((posts) => setPostInfo(posts))
     );
   }, []);
 
   async function toggleLikeStatus() {
     if (userInfo.id) {
-      const response = await fetch(`http://localhost:3001/post/${id}/like`, {
+      const response = await fetch(`${API_ENDPOINT}/post/${id}/like`, {
         method: "PATCH",
         credentials: "include",
       });
@@ -105,7 +106,7 @@ console.log(data)
               <div>
                 <img
                   className="w-[350px] h-[200px] object-cover md:w-[700px] md:h-[450px] rounded-[20px] mt-14"
-                  src={"http://localhost:3001/" + postInfo.cover}
+                  src={`${API_ENDPOINT}/${postInfo.cover}`}
                   alt=""
                 />
               </div>

@@ -3,6 +3,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { Navigate, useNavigate } from "react-router-dom";
 import { BiArrowBack } from "react-icons/bi";
+const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT;
 
 const modules = {
   toolbar: [
@@ -47,7 +48,7 @@ function CreateBlog() {
     data.set("content", content);
     data.set("file", files[0]);
     ev.preventDefault();
-    const response = await fetch("http://localhost:3001/post", {
+    const response = await fetch(`${API_ENDPOINT}/post`, {
       method: "POST",
       body: data,
       credentials: "include",
@@ -66,7 +67,7 @@ function CreateBlog() {
       <div className="w-[80%]">
         <div className="flex my-5">
           <button onClick={() => navigate(-1)}>
-            <BiArrowBack  size={24} color="#a7a7a7"/>
+            <BiArrowBack size={24} color="#a7a7a7" />
           </button>
           <h1 className="text-blue-600 font-extrabold text-[30px] ml-4 ">
             Create a New Blog

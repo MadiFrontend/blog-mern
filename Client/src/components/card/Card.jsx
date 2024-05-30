@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { LuCalendarDays } from "react-icons/lu";
 import { GrFormView } from "react-icons/gr";
 import { format } from "date-fns";
+const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT;
 const Card = ({ data }) => {
   return (
     <div
@@ -12,7 +13,7 @@ const Card = ({ data }) => {
       <Link to={`post/${data._id}`}>
         <img
           className="w-[300px] h-[200px] object-cover  rounded-[20px]"
-          src={"http://localhost:3001/" + data.cover}
+          src={`${API_ENDPOINT}/${data.cover}`}
           alt="post-image"
         />
       </Link>

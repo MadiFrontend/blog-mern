@@ -10,13 +10,14 @@ import { useState } from "react";
 import { UserContext } from "../../userContext";
 import user from "../../../public/user.jpg";
 import SearchBar from "../serach/SearchBar";
+const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT;
 
 export default function Header() {
   const [isActive, setisActive] = useState(false);
 
   const { setUserInfo, userInfo } = useContext(UserContext);
   useEffect(() => {
-    fetch("http://localhost:3001/profile", {
+    fetch(`${API_ENDPOINT}/profile`, {
       credentials: "include",
     }).then((response) => {
       response.json().then((userInfo) => {
@@ -26,7 +27,7 @@ export default function Header() {
   }, []);
 
   const logout = async () => {
-    await fetch("http://localhost:3001/logout", {
+    await fetch(`${API_ENDPOINT}/logout`, {
       method: "POST",
       credentials: "include",
     });

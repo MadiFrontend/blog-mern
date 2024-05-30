@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { UserContext } from "../../userContext";
+const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT;
 
 function Login() {
   const [username, setUsername] = useState();
@@ -12,12 +13,15 @@ function Login() {
 
   const login = async (ev) => {
     ev.preventDefault();
-    const response = await fetch("http://localhost:3001/login", {
-      method: "POST",
-      body: JSON.stringify({ username, password }),
-      headers: { "content-Type": "application/json" },
-      credentials: "include",
-    });
+    const response = await fetch(
+      `${API_ENDPOINT}/login`,
+      {
+        method: "POST",
+        body: JSON.stringify({ username, password }),
+        headers: { "content-Type": "application/json" },
+        credentials: "include",
+      }
+    );
     if (response.ok) {
       response.json().then((userInfo) => {
         setUserInfo(userInfo);
