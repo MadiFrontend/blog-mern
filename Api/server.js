@@ -12,7 +12,7 @@ const multer = require("multer");
 const uploadMiddleware = multer({ dest: "uploads/" });
 const fs = require("fs");
 const DB_CLUSTER = require("./env/mongoose");
-
+d
 const salt = bcrypt.genSaltSync(10);
 const secret = "vmdfsimvndrvmregidreg4e85r41418re4g";
 

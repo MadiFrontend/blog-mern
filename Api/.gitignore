@@ -11,6 +11,7 @@ node_modules
 dist
 env
 dist-ssr
+git rm /server.js
 *.local
 
 # Editor directories and files
@@ -23,3 +24,5 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+.vercel
