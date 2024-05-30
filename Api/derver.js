@@ -13,7 +13,8 @@ const cookieParser = require("cookie-parser");
 const multer = require("multer");
 const uploadMiddleware = multer({ dest: "uploads/" });
 const fs = require("fs");
-const DB_CLUSTER = require("./env/mongoose");
+require("dotenv").config();
+const DB_CLUSTER = process.env.DB_CLUSTER;
 
 // Generate a salt for password hashing and define a secret for JWT
 const salt = bcrypt.genSaltSync(10);
@@ -27,6 +28,12 @@ mongoose
 
 // Middleware for CORS, JSON parsing, cookie parsing, and static file serving
 app.use(cors({ credentials: true, origin: "http://localhost:5173" }));
+app.use(
+  cors({
+    credentials: true,
+    origin: "https://blog-mern-frontend-gamma.vercel.app/",
+  })
+);
 app.use(express.json());
 app.use(cookieParser());
 app.use("/uploads", express.static(__dirname + "/uploads"));
