@@ -27,13 +27,16 @@ mongoose
   .catch((err) => console.log("Disconnect From DB!"));
 
 // Middleware for CORS, JSON parsing, cookie parsing, and static file serving
-app.use(cors({ credentials: true, origin: "http://localhost:5173" }));
-app.use(
-  cors({
-    credentials: true,
-    origin: "https://blog-mern-frontend-gamma.vercel.app/",
-  })
-);
+const corsOptions = {
+  origin: [
+    "https://blog-mern-frontend-gamma.vercel.app",
+    "http://localhost:5173",
+  ],
+  optionsSuccessStatus: 200, // For legacy browser support
+};
+
+app.use(cors(corsOptions));
+
 app.use(express.json());
 app.use(cookieParser());
 app.use("/uploads", express.static(__dirname + "/uploads"));
