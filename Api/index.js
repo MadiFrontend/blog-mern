@@ -2,7 +2,7 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const port = 3001;
+const port = process.env.PORT || 3000;
 const User = require("./models/User");
 const Post = require("./models/Post");
 const Comment = require("./models/Comment");
@@ -297,7 +297,7 @@ app.get("/", (req, res) => res.send("express is here!"));
 // Start the server
 app.listen(port, () => console.log(` app listening on port ${port}!`));
 
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   console.error(err.stack); // log error stack trace
-  res.status(500).send('Something broke!');
+  res.status(500).send("Something broke!");
 });
