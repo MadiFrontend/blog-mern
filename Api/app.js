@@ -2,7 +2,7 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const port = process.env.PORT || 3001;
+require("dotenv").config();
 const User = require("./models/User");
 const Post = require("./models/Post");
 const Comment = require("./models/Comment");
@@ -13,8 +13,8 @@ const cookieParser = require("cookie-parser");
 const multer = require("multer");
 const uploadMiddleware = multer({ dest: "uploads/" });
 const fs = require("fs");
-require("dotenv").config();
 const DB_CLUSTER = process.env.DB_CLUSTER;
+const port = process.env.PORT || 3001;
 
 // Generate a salt for password hashing and define a secret for JWT
 const salt = bcrypt.genSaltSync(10);
